@@ -8,8 +8,8 @@ WEBHOOK_URL = "/webhooks/rest/webhook"
 
 with st.sidebar:
     user = st.text_input("User ID", key="id", type="default", value=USER_ID, disabled=True)
-    "[View the source code](https://github.com/streamlit/llm-examples/blob/main/Chatbot.py)"
-    "[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/llm-examples?quickstart=1)"
+    "[View the source code](https://github.com/NicoDoebele/job-interview-chatbot)"
+    "[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/NicoDoebele/job-interview-chatbot?quickstart=1)"
 
 st.title("💬 Job Interview Chatbot")
 st.caption("🎓 A Rasa + Streamlit chatbot developed for NLP")
