@@ -17,15 +17,15 @@ if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "Hello! What questions do you have about your upcoming interviews? I can assist you with your interview preparation, provide common questions, explain expected behavior and more. Just ask your questions or request a short mock interview!"}]
 
 for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
+    st.chat_message(msg["role"]).write(msg["content"].replace("\n", "  \n"))
 
 if prompt := st.chat_input():
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
 
     # get response from local rasa chatbot via http
-    response = requests.post(f"{RASA_BASE_URL}{WEBHOOK_URL}", json={"sender": user, "message": prompt}).json()
+    response = requests.post(f"{RASA_BASE_URL}{WEBHOOK_URL}", json={"sender_id": USER_ID, "message": prompt}).json()
     messages = [msg["text"] for msg in response]
     for msg in messages:
         st.session_state.messages.append({"role": "assistant", "content": msg})
-        st.chat_message("assistant").write(msg)
+        st.chat_message("assistant").write(msg.replace("\n", "  \n"))
