@@ -1,9 +1,10 @@
 import streamlit as st
 import uuid
 import requests
+import os
 
 USER_ID = str(uuid.uuid4())
-RASA_BASE_URL = "http://localhost:5005"
+RASA_BASE_URL = os.environ.get("RASA_BASE_URL", "http://localhost:5005")
 WEBHOOK_URL = "/webhooks/rest/webhook"
 
 with st.sidebar:
