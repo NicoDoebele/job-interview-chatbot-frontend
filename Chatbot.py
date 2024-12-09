@@ -26,7 +26,17 @@ if prompt := st.chat_input():
 
     # get response from local rasa chatbot via http
     response = requests.post(f"{RASA_BASE_URL}{WEBHOOK_URL}", json={"sender_id": USER_ID, "message": prompt}).json()
-    messages = [msg["text"] for msg in response]
-    for msg in messages:
-        st.session_state.messages.append({"role": "assistant", "content": msg})
-        st.chat_message("assistant").write(msg.replace("\n", "  \n"))
+
+    try:
+        for msg in response:
+            if "text" in msg:
+                text = msg["text"]
+                st.session_state.messages.append({"role": "assistant", "content": text})
+                st.chat_message("assistant").write(text.replace("\n", "  \n"))
+            elif "image" in msg:
+                image_url = msg["image"]
+                st.session_state.messages.append({"role": "assistant", "content": f"![image]({image_url})"})
+                st.chat_message("assistant").write(f"![image]({image_url})")
+    except KeyError:
+        # if no text or image is returned
+        pass
